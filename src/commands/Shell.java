@@ -1,9 +1,11 @@
 package commands;
 
 import java.util.Scanner;
+
+import players.Opponent;
+import players.User;
 import utils.PrinterThread;
 import utils.Difficulty;
-import randomizer.Opponent;
 
 public class Shell {
 	
@@ -14,6 +16,7 @@ public class Shell {
 	private int tries;
 	private boolean guessed; 
 	private Opponent op;
+	private User usr;
 	
 	//constructor
 	public Shell() {
@@ -47,6 +50,10 @@ public class Shell {
 		return reader;
 	}
 	
+	public User getUser() {
+		return usr;
+	}
+	
 	//setters
 	public void setTries(int tries){
 		this.tries = tries;
@@ -63,7 +70,6 @@ public class Shell {
 		printer.join();
 		
 		op.generateRandomNumber(this);
-		System.out.println(op.getNumber());
 		while(tries != 0){
 			
 			System.out.print("\nInserta el número que piensas: ");
@@ -91,7 +97,7 @@ public class Shell {
 		int modeIndx = 0;
 		while(!difficultySelected) {
 			System.out.print(
-					"1-Easy [1-10] 5 intentos.\n" +
+					"\n1-Easy [1-10] 5 intentos.\n" +
 					"2-Medium [1-20] 3 intentos.\n" +
 					"3-Hard [1-50] 1 intento.\n" +
 					"Selecciona la dificultad: ");
@@ -122,5 +128,30 @@ public class Shell {
 		
 		return accepted.equals("S");
 	}
+	
+	public void loginUser() {
+		boolean userLogged = false; 
+		
+		while(!userLogged) {
+			System.out.print("Elige un nombre de usuario entre [3-10] caracteres: ");
+			String username = reader.nextLine();
+			
+			
+			if (username.length() < 3) System.out.println("El nombre es demasiado corto.\n");
+			
+			else if(username.length() > 10) System.out.println("El nombre es demasiado largo.\n");
+			
+			else {
+				System.out.print("El nombre introducido es \"" + username + "\". ¿Es correcto?(S/N): ");
+				String accepted = reader.nextLine();
+				
+				if(accepted.equals("S")) {
+					usr = new User(username);
+					userLogged = true;
+				}
+			}
+		}
+	}
+	
 
 }

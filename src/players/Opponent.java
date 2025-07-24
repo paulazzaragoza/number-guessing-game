@@ -1,4 +1,4 @@
-package randomizer;
+package players;
 
 import java.util.Random;
 import commands.Shell;
